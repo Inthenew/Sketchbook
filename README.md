@@ -84,6 +84,21 @@ July 11 2024:
 <b>- Simplified the ocean to make the game less laggy</b>
 <br/>
 <b>- Added a new boat model with a smaller file size</b>
+<br/>
+Febuary 7 2025:
+<br/>
+<b>- You can now teleport using the "t" button when in free camera mode</b>
+<br/>
+<b>- I made boats no longer bounce</b>
+<br/>
+<b>- I changed the boat model a little</b>
+<br/>
+<b>- You can now use the "z" button to hide/show the controls</b>
+<br/>
+<b>- I made it so you can look around your vehicle, but when you stop looking around, the camera slowly moves you back</b>
+<br/>
+<b>- I made it so the moon has it's own gravity now and I made space have no gravity</b>
+<br/>
 
 ## 📒 Sketchbook
 Simple web based game engine built on [three.js](https://github.com/mrdoob/three.js) and [cannon.js](https://github.com/schteppe/cannon.js) focused on third-person character controls and related gameplay mechanics.
