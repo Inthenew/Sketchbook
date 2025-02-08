@@ -95,7 +95,7 @@ Febuary 7 2025:
 <br/>
 <b>- You can now use the "z" button to hide/show the controls</b>
 <br/>
-<b>- I made it so you can look around your vehicle, but when you stop looking around, the camera slowly moves you back</b>
+<b>- I made it so you can look around your vehicle, with the camera moving back when you are done</b>
 <br/>
 <b>- I made it so the moon has it's own gravity now and I made space have no gravity</b>
 <br/>
