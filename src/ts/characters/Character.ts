@@ -263,7 +263,7 @@ export class Character extends THREE.Object3D implements IWorldEntity
 	{
 		gltf.scene.traverse((child) => {
 
-			if (child.isMesh)
+			if (child.isMesh && child.material.name !== 'ocean.001')
 			{
 				Utils.setupMeshProperties(child);
 
@@ -674,7 +674,8 @@ export class Character extends THREE.Object3D implements IWorldEntity
 	{
 		this.resetControls();
 
-		if (seat.door?.rotation < 0.5 && !seat.vehicle.isBoat)
+		//@ts-ignore
+		if (seat.door?.rotation < 0.5 && !seat.vehicle.isBoat && !seat.vehicle.isRocket)
 		{
 			this.setState(new OpenVehicleDoor(this, seat, entryPoint));
 		}

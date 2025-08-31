@@ -5,6 +5,7 @@ import { EntityType } from '../enums/EntityType';
 
 export interface IControllable extends IInputReceiver
 {
+	type: string;
 	collision: any;
 	isBoat: any;
 	entityType: EntityType;

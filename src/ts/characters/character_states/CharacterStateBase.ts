@@ -134,7 +134,8 @@ export abstract class CharacterStateBase implements ICharacterState
 		}
 		else
 		{
-			if (closeOnLandIfClose) {
+			//@ts-ignore
+			if (closeOnLandIfClose && !seat.vehicle.isBoat && !seat.vehicle.isRocket) {
 				this.character.setState(new CloseVehicleDoorOutside(this.character, seat));
 			} else {
 				this.character.setState(new DropIdle(this.character));

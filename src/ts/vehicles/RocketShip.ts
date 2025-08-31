@@ -16,6 +16,7 @@ export class RocketShip extends Vehicle implements IControllable, IWorldEntity {
     private justBlasted: boolean = false;
     private balancing: boolean = false;
     private landing: boolean = false;
+    public isRocket: boolean = true;
     private smokeSystem: any;
     private totalDown: number = 0;
     private firstTime: boolean = true;
@@ -204,14 +205,58 @@ export class RocketShip extends Vehicle implements IControllable, IWorldEntity {
                     }
                     $('#earth').click((e) => {
                         document.getElementById('planet-menu')?.classList.add('planet-menu-hidden');
-                        // Land on earth //
+                        console.log('Going to Earth...');
+                        // Earth coordinates: approximately 15.1903, 16.1283, -491.721
                         if (body.position.z < -10000) {
-                            body.position.set(15.1903, 6000, -491.721);
+                            // Coming from moon, need smooth travel
+                            this.balancing = true;
+                            body.angularDamping = .5;
+                            let angle = Math.PI / 2; // 90 degrees in radians
+                            let axis = new CANNON.Vec3(1, 0, 0); // X-axis (opposite direction from moon)
+                            let quaternion = new CANNON.Quaternion();
+                            quaternion.setFromAxisAngle(axis, angle);
+                            body.quaternion = quaternion;
+                            // Move towards Earth (positive z direction)
+                            let s = setInterval(() => {
+                                body.velocity.set(0, 0, 1000);
+                            });
+                            let sddd = setInterval(() => {
+                                if (body.position.z >= -491.721) {
+                                    clearInterval(sddd);
+                                    clearInterval(s);
+                                    body.velocity.set(0, 0, 0);
+                                    body.position.set(15.1903, 6000, -491.721);
+                                    body.angularDamping = .5;
+                                    let angle = Math.PI / 2; // 90 degrees in radians
+                                    let axis = new CANNON.Vec3(0, 0, 0); // Reset rotation
+                                    let quaternion = new CANNON.Quaternion();
+                                    quaternion.setFromAxisAngle(axis, angle);
+                                    body.quaternion = quaternion;
+                                    body.angularDamping = 1;
+                                    let s2 = setInterval(() => {
+                                        body.velocity.set(0, -500, 0);
+                                    });
+                                    let sdddd = setInterval(() => {
+                                        if (body.position.y <= 16.1283) {
+                                            clearInterval(sdddd);
+                                            clearTimeout(s2);
+                                            body.velocity.set(0, 0, 0);
+                                            body.position.set(15.1903, 16.1283, -491.721);
+                                            this.goingTo = 'earth';
+                                            this.landing = true;
+                                        }
+                                    })
+                                }
+                            }, 200)
+                            body.angularDamping = 1;
+                        } else {
+                            // Already on or near Earth
+                            body.position.set(15.1903, 16.1283, -491.721);
                             body.velocity.y = 0;
+                            this.goingTo = 'earth';
+                            this.landing = true;
+                            console.log('Landing on Earth...');
                         }
-                        console.log('Landing...');
-                        this.goingTo = 'earth';
-                        this.landing = true;
                     })
                     $('#moon').click((e) => {
                         document.getElementById('planet-menu')?.classList.add('planet-menu-hidden');

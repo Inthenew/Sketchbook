@@ -3,6 +3,7 @@ import { IInputReceiver } from './IInputReceiver';
 import { VehicleSeat } from '../vehicles/VehicleSeat';
 import { EntityType } from '../enums/EntityType';
 export interface IControllable extends IInputReceiver {
+    type: string;
     collision: any;
     isBoat: any;
     entityType: EntityType;

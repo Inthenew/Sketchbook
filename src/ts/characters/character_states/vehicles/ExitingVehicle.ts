@@ -60,7 +60,8 @@ export class ExitingVehicle extends ExitingStateBase
                 }
 				this.character.leaveSeat();
 			}
-			else if (this.anyDirection() || this.seat.door === undefined || this.seat.vehicle.isBoat)
+			// @ts-ignore
+			else if (this.anyDirection() || this.seat.door === undefined || this.seat.vehicle.isBoat || this.seat.vehicle.isRocket)
 			{
 				this.character.setState(new Idle(this.character));
 				this.character.leaveSeat();

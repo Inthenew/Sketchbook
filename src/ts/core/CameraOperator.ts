@@ -121,7 +121,7 @@ export class CameraOperator implements IInputReceiver, IUpdatable {
 		let vehicle = globalThis.currentTing;
 		if (vehicle && vehicle.firstPerson && !vehicle.isRocket) {
 			let lookDirection = new THREE.Vector3(0, 0, -1);
-			lookDirection.applyQuaternion(vehicle.quaternion);
+			lookDirection.applyQuaternion(vehicle.quaternion);			
 			let targetPosition = this.target.clone().add(lookDirection);
 	
 			if (timeSinceLastMouseMove > this.autoRotateDelay) {

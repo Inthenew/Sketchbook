@@ -272,8 +272,11 @@ export function cannonQuat(quat: THREE.Quaternion): CANNON.Quaternion
 
 export function setupMeshProperties(child: any): void
 {
-	child.castShadow = true;
-	child.receiveShadow = true;
+	if (child.material.name !== 'ocean.001') {
+		child.castShadow = true;
+		child.receiveShadow = true;
+		console.log(child)
+	}
 
 	if (child.material.map !== null)
 	{

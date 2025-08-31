@@ -45,8 +45,8 @@ export class World {
     public stats: Stats;
     public graphicsWorld: THREE.Scene;
     public sky: Sky;
-    public sealevel: number = 15.1;
-    public respawnLevel: number = 14.989;
+    public sealevel: number = 20.6;
+    public respawnLevel: number = 20;
     public physicsWorld: CANNON.World;
     public parallelPairs: any[];
     public physicsFrameRate: number;
@@ -99,6 +99,7 @@ export class World {
     private controlsHTML: string = "";
     private fttttttt: boolean = false; // Flag used in updateControls
     private lastControls: any[] = [];   // Store last controls array
+    ocean: Ocean;
     constructor(worldScenePath?: any) {
         const scope = this;
         globalThis.world = scope;
@@ -309,8 +310,8 @@ export class World {
                     this.outOfBoundsRespawn(vehicle.rayCastVehicle.chassisBody, Utils.cannonVector(worldPos));
                 } else {
                     // It is a boat, so "float" it //
-                    vehicle.collision.position.y = this.sealevel;
-                    vehicle.collision.velocity.y = 0;
+                    //vehicle.collision.position.y = this.sealevel;
+                    //vehicle.collision.velocity.y = 0;
                 }
             }
         });
@@ -409,7 +410,9 @@ export class World {
                     this.sky.csm.setupMaterial(child.material);
 
                     if (child.material.name === 'ocean.001') {
-                        this.registerUpdatable(new Ocean(child, this));
+                        const ocean = new Ocean(child, this);
+                        this.ocean = ocean;
+                        this.registerUpdatable(ocean);
                     }
                     if (child.name === 'Cube352') {
                         const textureLoader = new THREE.TextureLoader();

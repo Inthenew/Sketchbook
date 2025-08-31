@@ -26,8 +26,8 @@ export class Driving extends CharacterStateBase
 	public update(timeStep: number): void
 	{
 		super.update(timeStep);
-
-		if (!this.seat.door?.achievingTargetRotation && this.seat.door?.rotation > 0 && this.seat.vehicle.noDirectionPressed() && !this.seat.vehicle.isBoat)
+		//@ts-ignore
+		if (!this.seat.door?.achievingTargetRotation && this.seat.door?.rotation > 0 && this.seat.vehicle.noDirectionPressed() && !this.seat.vehicle.isBoat && !this.seat.vehicle.isRocket)
 		{
 			this.character.setState(new CloseVehicleDoorInside(this.character, this.seat));
 		}

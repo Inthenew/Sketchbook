@@ -29,6 +29,8 @@ export declare abstract class Vehicle extends THREE.Object3D implements IWorldEn
     spawnPoint: THREE.Object3D;
     modelContainer: THREE.Group;
     private firstPerson;
+    viewBack: any;
+    centerHere: any[];
     constructor(gltf: any, handlingSetup?: any);
     updateWheelProps(property: any, value: any): void;
     updateCarSpeed(speed: any): void;

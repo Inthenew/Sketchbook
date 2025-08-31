@@ -11,6 +11,7 @@ export declare class RocketShip extends Vehicle implements IControllable, IWorld
     private justBlasted;
     private balancing;
     private landing;
+    isRocket: boolean;
     private smokeSystem;
     private totalDown;
     private firstTime;

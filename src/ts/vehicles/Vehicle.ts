@@ -35,6 +35,8 @@ export abstract class Vehicle extends THREE.Object3D implements IWorldEntity {
 	public modelContainer: THREE.Group;
 
 	private firstPerson: boolean = false;
+	public viewBack;
+	centerHere: any[];
 
 	constructor(gltf: any, handlingSetup?: any) {
 		super();
@@ -254,23 +256,42 @@ export abstract class Vehicle extends THREE.Object3D implements IWorldEntity {
 
 		globalThis.currentTing = this;
 		if (this.firstPerson) {
-			// this.world.cameraOperator.target.set(
-			//     this.position.x + this.camera.position.x,
-			//     this.position.y + this.camera.position.y,
-			//     this.position.z + this.camera.position.z
-			// );
-			let temp = new THREE.Vector3().copy(this.camera.position);
-			temp.applyQuaternion(this.quaternion);
-			this.world.cameraOperator.target.copy(temp.add(this.position));
+			// Default behavior - use camera position and apply quaternion
+			let cameraTarget = new THREE.Vector3().copy(this.camera.position);
+			cameraTarget.applyQuaternion(this.quaternion);
+			let finalTarget = cameraTarget.add(this.position);
 			
+			// Apply centerHere Y offset - only affects world Y coordinate directly
+			if (this.centerHere && this.centerHere[1] === true) {
+				// Simply add the Y difference directly to world Y (no rotation)
+				let yDifference = this.centerHere[0].position.y - this.camera.position.y;
+				finalTarget.y += yDifference;
+			}
+			
+			this.world.cameraOperator.target.copy(finalTarget);
 		}
 		else {
-			// Position camera
-			this.world.cameraOperator.target.set(
+			// Position camera for third-person view
+			let targetPosition = new THREE.Vector3(
 				this.position.x,
 				this.position.y + 0.5,
 				this.position.z
 			);
+			
+			// Apply centerHere for third-person view if available - only Y position in world space
+			if (this.centerHere && this.centerHere[1] === true) {
+				// Simply add the Y offset directly in world space (no rotation needed)
+				targetPosition.y = this.position.y + this.centerHere[0].position.y;
+			}
+			
+			// Apply viewBack by modifying camera radius instead of target position
+			let cameraRadius = 3; // Default third-person radius
+			if (this.viewBack && !isNaN(Number(this.viewBack))) {
+				cameraRadius += Number(this.viewBack);
+			}
+			this.world.cameraOperator.setRadius(cameraRadius, true);
+			
+			this.world.cameraOperator.target.copy(targetPosition);
 		}
 	}
 
@@ -356,16 +377,19 @@ export abstract class Vehicle extends THREE.Object3D implements IWorldEntity {
 	}
 
 	public readVehicleData(gltf: any): void {
-		gltf.scene.traverse((child) => {
-
-			if (child.isMesh) {
+		let whatWeTraversing = gltf.scene;
+		//if (this.entityType === EntityType.RocketShip) {
+		//	// Due to an issue loading, we are adding these lines, if you face issues with a new model, simply remove this and it might fix it //
+		//	whatWeTraversing = gltf.scene.children[0].children[0];
+		//}
+		whatWeTraversing.traverse((child) => {
+			//if (this.entityType === EntityType.RocketShip) console.log(child);
+			if (child.isMesh && child.material.name !== 'ocean.001') {
 				Utils.setupMeshProperties(child);
-
 				if (child.material !== undefined) {
 					this.materials.push(child.material);
 				}
 			}
-
 			if (child.hasOwnProperty('userData')) {
 				if (child.userData.hasOwnProperty('data')) {
 					if (child.userData.data === 'seat') {
@@ -373,19 +397,25 @@ export abstract class Vehicle extends THREE.Object3D implements IWorldEntity {
 					}
 					if (child.userData.data === 'camera') {
 						this.camera = child;
+						if (!isNaN(Number(child.userData.viewBack))) {
+							this.viewBack = child.userData.viewBack;
+						}
+						if (child.userData.centerHere === 'true') {
+							this.centerHere = [this.camera, true];
+						}
 					}
 					if (child.userData.data === 'wheel') {
 						this.wheels.push(new Wheel(child));
 					}
 					if (child.userData.data === 'collision') {
-						if (child.userData.shape === 'box') {
+						if (child.userData.shape === 'box' || child.userData.type === 'box') {
 							child.visible = false;
 
 							let phys = new CANNON.Box(new CANNON.Vec3(child.scale.x, child.scale.y, child.scale.z));
 							phys.collisionFilterMask = ~CollisionGroups.TrimeshColliders;
 							this.collision.addShape(phys, new CANNON.Vec3(child.position.x, child.position.y, child.position.z));
 						}
-						else if (child.userData.shape === 'sphere') {
+						else if (child.userData.shape === 'sphere' || child.userData.type === 'sphere') {
 							child.visible = false;
 
 							let phys = new CANNON.Sphere(child.scale.x);

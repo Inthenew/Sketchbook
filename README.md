@@ -1,7 +1,7 @@
 <p align="center">
-	<a href="https://sketchbook2.glitch.me"><img src="./thumbnail.png"></a>
+	<a href="https://www.freddylabs.dev/sketchbook/index.html"><img src="./thumbnail.png"></a>
 	<br>
-	<a href="https://sketchbook2.glitch.me">Live demo</a>
+	<a href="https://www.freddylabs.dev/sketchbook/index.html">Live demo</a>
 	<br>
 </p>
 
@@ -95,9 +95,21 @@ Febuary 7 2025:
 <br/>
 <b>- You can now use the "z" button to hide/show the controls</b>
 <br/>
-<b>- I made it so you can look around your vehicle, but when you stop looking around, the camera slowly moves you back</b>
+<b>- I made it so you can look around your vehicle, with the camera moving back when you are done</b>
 <br/>
 <b>- I made it so the moon has it's own gravity now and I made space have no gravity</b>
+<br/>
+August 31 2025:
+<br/>
+<b>- The ocean now has waves that the boats ride on top of</b>
+<br/>
+<b>- Fixed some boat-related bugs</b>
+<br/>
+<b>- New rocketship model! If you press "f" near the window side of the rocket you get on top</b>
+<br/>
+<b>- Dock has stilts now for the new waves</b>
+<br/>
+<b>- Rocket doesn't just teleport to the Earth, it takes the full path now</b>
 <br/>
 
 ## 📒 Sketchbook

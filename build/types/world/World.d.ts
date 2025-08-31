@@ -13,6 +13,7 @@ import { Path } from './Path';
 import { Vehicle } from '../vehicles/Vehicle';
 import { Scenario } from './Scenario';
 import { Sky } from './Sky';
+import { Ocean } from './Ocean';
 export declare class World {
     renderer: THREE.WebGLRenderer;
     camera: THREE.PerspectiveCamera;
@@ -66,6 +67,7 @@ export declare class World {
     private controlsHTML;
     private fttttttt;
     private lastControls;
+    ocean: Ocean;
     constructor(worldScenePath?: any);
     update(timeStep: number, unscaledTimeStep: number): void;
     updatePhysics(timeStep: number): void;
