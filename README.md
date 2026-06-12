@@ -7,9 +7,7 @@
 </p>
 -->
 # This is paused for now, i had a link but the website expired, so thats hidden now. Might come back
-[![badge](https://img.shields.io/npm/v/sketchbook?style=flat-square)](https://www.npmjs.com/package/sketchbook)
-[![badge](https://img.shields.io/travis/swift502/sketchbook?style=flat-square)](https://travis-ci.org/swift502/Sketchbook)
-[![badge](https://img.shields.io/discord/730763393325334628?label=discord&style=flat-square)](https://discord.gg/fGuEqCe)
+
 # Updates:
 
 <div>April 6 2023:<br/>
