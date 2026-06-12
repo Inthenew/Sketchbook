@@ -6,7 +6,7 @@
 	<br>
 </p>
 -->
-# This is paused for now, i had a link but the website expired, so thats hidden now. Might come back
+# This is paused for now, i had a link but the website expired, so thats hidden now. Might come back to this at some point
 
 # Updates:
 
